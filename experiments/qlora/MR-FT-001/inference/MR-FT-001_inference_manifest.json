@@ -1,6 +1,6 @@
 {
   "experiment_id": "MR-FT-001",
-  "status": "complete_pending_github_prediction_archive",
+  "status": "complete_verified_pending_github_prediction_archive",
   "base_model": "google/gemma-4-E2B-it",
   "model_revision": "b515064b63ff28985d549455f7709f112e8a5e39",
   "adapter_checkpoint": "checkpoint-1750",
@@ -19,13 +19,24 @@
   "checkpoint_schedule": {
     "interval_examples": 25,
     "final_checkpoint": 794,
-    "last_resume_checkpoint": 725
+    "last_resume_checkpoint": 725,
+    "resume_example": 726
   },
   "prediction_artifacts": {
     "final_csv": "MR-FT-001_predictions.csv",
     "final_checkpoint_csv": "MR-FT-001_predictions_checkpoint_0794.csv",
-    "final_csv_sha256": null,
-    "final_checkpoint_sha256": null
+    "final_csv_sha256": "2A258ADB8F87AB810B3365F65919E0617E87449D07004A9CA9EDE89A1B521E",
+    "final_checkpoint_sha256": "2A258ADB8F87AB810B3365F65919E0617E87449D07004A9CA9EDE89A1B521E",
+    "byte_identical": true,
+    "rows": 794,
+    "unique_pair_ids": 794
   },
-  "archive_note": "Populate final prediction hashes after the exact Kaggle artifacts are copied to GitHub via Git LFS and verified."
+  "verification": {
+    "exact_frozen_test_order": true,
+    "exact_source_text_match": true,
+    "no_empty_predictions": true,
+    "reference_summary_provided_to_model": false,
+    "verified_on": "2026-10-06"
+  },
+  "archive_note": "The exact prediction CSV bytes still need to be copied to the repository through Git LFS; the hashes above are the verified Kaggle artifact hashes and must match the archived Git LFS blobs."
 }
