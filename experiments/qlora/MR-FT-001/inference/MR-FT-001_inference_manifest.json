@@ -1,0 +1,31 @@
+{
+  "experiment_id": "MR-FT-001",
+  "status": "complete_pending_github_prediction_archive",
+  "base_model": "google/gemma-4-E2B-it",
+  "model_revision": "b515064b63ff28985d549455f7709f112e8a5e39",
+  "adapter_checkpoint": "checkpoint-1750",
+  "adapter_sha256": "6828bff5f35f384cb6c2a3736f1a0b8c2960b65cac70a874dd4d5230e45bde91",
+  "frozen_test": {
+    "path": "data/processed/marathi_v1/06_test_frozen.csv",
+    "rows": 794,
+    "sha256": "D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D"
+  },
+  "generation": {
+    "prompt": "खालील मराठी मजकुराचा अचूक, संक्षिप्त आणि तथ्यसुसंगत सारांश लिहा.",
+    "max_new_tokens": 224,
+    "do_sample": false,
+    "reference_summary_provided_to_model": false
+  },
+  "checkpoint_schedule": {
+    "interval_examples": 25,
+    "final_checkpoint": 794,
+    "last_resume_checkpoint": 725
+  },
+  "prediction_artifacts": {
+    "final_csv": "MR-FT-001_predictions.csv",
+    "final_checkpoint_csv": "MR-FT-001_predictions_checkpoint_0794.csv",
+    "final_csv_sha256": null,
+    "final_checkpoint_sha256": null
+  },
+  "archive_note": "Populate final prediction hashes after the exact Kaggle artifacts are copied to GitHub via Git LFS and verified."
+}
