@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "IndianLanguageSummarization"
+message: "If you use this repository, please cite the repository and the referenced model/fine-tuning/evaluation works."
+type: software
+authors:
+  - family-names: "Gaikwad"
+    given-names: "Atharva"
+date-released: 2026-10-06
+version: "0.1.0"
+repository-code: "https://github.com/atharva315/IndianLanguageSummarization"
+keywords:
+  - Marathi
+  - summarization
+  - Indian languages
+  - Gemma
+  - QLoRA
+  - LoRA
+  - parameter-efficient fine-tuning
