@@ -1,0 +1,5 @@
+# Evaluation-only environment
+# Keep separate from the Gemma training runtime.
+evaluate==0.4.6
+sacrebleu==2.6.0
+bert-score==0.3.13
