@@ -1,504 +1,176 @@
-\# Research Protocol
+# Research Protocol
 
+## 1. Objective
 
+This project studies Marathi abstractive summarization using `google/gemma-4-E2B-it` and parameter-efficient fine-tuning.
 
-\## 1. Project Objective
+The primary comparison is:
 
+1. **MR-BM-001:** untouched Gemma 4 E2B IT baseline
+2. **MR-FT-001:** Marathi-specific QLoRA fine-tuned Gemma
 
+The same immutable 794-example Marathi test set is used for both.
 
-This project studies Marathi abstractive text summarization using
+## 2. Model
 
-`google/gemma-4-E2B-it` and parameter-efficient fine-tuning.
+- Model: `google/gemma-4-E2B-it`
+- Pinned revision: `b515064b63ff28985d549455f7709f112e8a5e39`
+- Quantized inference/training load: 4-bit NF4
+- Double quantization: enabled
+- QLoRA compute dtype: FP16
 
+Gemma 4 is an open-weight model family from Google DeepMind; the official model card lists Apache 2.0 licensing and multilingual support. See [docs/industry_references.md](industry_references.md).
 
+## 3. Dataset
 
-The main Marathi research comparison is:
+Marathi v1:
 
+- Train: 14,020
+- Validation: 796
+- Frozen test: 794
+- Total experimental pool: 15,610
+- Template-family cap: 12
+- Split: template-aware
 
+Frozen test SHA-256:
 
-1\. Untuned Gemma 4 E2B IT baseline
+`D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D`
 
-2\. Marathi-specific QLoRA fine-tuned model
+Pipeline:
 
+`raw -> cleaned -> normalized/deduplicated -> template QA -> template-aware split -> frozen test`
 
+The current dataset is synthetic/template-heavy. Template separation reduces structural leakage risk, but it does not by itself prove semantic diversity or real-world generalization.
 
-The same frozen Marathi test set will be used for both experiments.
+## 4. Leakage controls
 
+The data pipeline checks or documents:
 
+- exact duplicate source-summary pairs
+- normalized duplicate pairs
+- source leakage across splits
+- summary leakage across splits
+- duplicate/near-duplicate evaluation content
+- template-family overlap
 
-\---
+No frozen test example is used for training or model-selection tuning.
 
+## 5. MR-BM-001 — baseline
 
+Purpose: measure untouched Gemma performance before Marathi adaptation.
 
-\## 2. Main Model
+- Training: none
+- Adapter: none
+- Input: source text only
+- Reference summary: evaluation only
+- Generation: `max_new_tokens=224`, deterministic greedy generation
+- Frozen test: 794 examples
+- Prediction SHA-256: `c67d873a6f762ac75e6708d3f686407059abae85a5c9b558836b054bf1beefd0`
 
+## 6. MR-FT-001 — QLoRA
 
+Purpose: isolate the effect of Marathi-specific parameter-efficient adaptation.
 
-Base model:
+Training:
 
+- Train: 14,020
+- Validation: 796
+- Epochs: 3
+- max length: 768
+- per-device batch: 1
+- gradient accumulation: 8
+- 2-GPU global effective batch: 16
+- learning rate: 1e-4
+- cosine schedule
+- warmup: 263
+- weight decay: 0.01
+- max grad norm: 1.0
+- LoRA: r=16, alpha=32, dropout=0.05, bias=none
+- optimizer: paged AdamW 8-bit
+- gradient checkpointing: enabled
+- AMP: disabled in final run; QLoRA compute stayed FP16
 
+Best checkpoint: **1750**
 
-`google/gemma-4-E2B-it`
+Best validation loss: **0.0001272337**
 
+Best adapter SHA-256:
 
+`6828bff5f35f384cb6c2a3736f1a0b8c2960b65cac70a874dd4d5230e45bde91`
 
-The exact model revision used for experiments will be recorded before
+Observed training loss fell from 2.5597917557 to 2.26634205e-05. Validation loss was lowest at step 1750; later validation degradation is recorded as a possible overfitting signal rather than being hidden.
 
-baseline inference.
+## 7. Fair E0 vs E1 comparison
 
+Both experiments use:
 
+- identical frozen test examples
+- identical source texts
+- identical reference summaries for scoring
+- the same Gemma model family and pinned revision
+- the same inference prompt
+- the same generation settings
+- the same evaluation implementation
 
-The model will be loaded and evaluated on cloud GPU hardware.
+Reference summaries are never passed to the model.
 
+## 8. Inference
 
+MR-FT-001 frozen-test inference is complete:
 
-The local RTX 2050 with 4 GB VRAM is not the target hardware for
+- 794/794 generated
+- deterministic generation
+- checkpointed at 25-example intervals
+- final checkpoint: 794
 
-Gemma training.
+Inference artifact provenance is documented in [experiments/qlora/MR-FT-001/inference/README.md](../experiments/qlora/MR-FT-001/inference/README.md).
 
+## 9. Evaluation
 
+Primary metrics:
 
-\---
+- ROUGE-1 / ROUGE-2 / ROUGE-L
+- chrF++
+- BERTScore
 
+Human evaluation:
 
+- blind A/B comparison
+- fixed prepared sample
+- model identity hidden from evaluators
 
-\## 3. Marathi Research Scope
+Any external/generalization benchmark must remain outside the Marathi v1 training pool.
 
+## 10. Reproducibility
 
+Each experiment records:
 
-The user's contribution is restricted to Marathi.
+- experiment ID
+- model and exact revision
+- dataset version
+- frozen test hash
+- Git commit / repository state
+- Python and package versions
+- GPU/CUDA environment
+- training hyperparameters
+- generation settings
+- evaluation configuration
+- artifact hashes where available
 
+## 11. Storage policy
 
+Large model weights, optimizer states, and training checkpoints are not stored in normal Git history.
 
-The Marathi pipeline includes:
+Git LFS is used for approved large datasets/results. Hashes and metadata are retained for provenance.
 
+## 12. Research integrity
 
+The repository distinguishes:
 
-\- Marathi source-data preparation
+- measured results
+- configuration facts
+- methodological decisions
+- hypotheses
+- interpretations
 
-\- Marathi dataset quality control
-
-\- Marathi train/validation/test construction
-
-\- Marathi tokenizer analysis
-
-\- Gemma Marathi baseline evaluation
-
-\- Marathi QLoRA fine-tuning
-
-\- Marathi automatic evaluation
-
-\- Marathi human evaluation preparation
-
-
-
-Hindi and Tamil processing are outside the user's local research scope.
-
-
-
-\---
-
-
-
-\## 4. Experiment BM-001: Marathi Gemma Baseline
-
-
-
-Experiment ID:
-
-
-
-`MR-BM-001`
-
-
-
-Purpose:
-
-
-
-Measure the performance of the untouched Gemma model on the frozen
-
-Marathi test set before Marathi-specific fine-tuning.
-
-
-
-Configuration:
-
-
-
-\- Model: `google/gemma-4-E2B-it`
-
-\- Training: none
-
-\- Adapter: none
-
-\- Dataset: frozen Marathi test set
-
-\- Input: source Marathi text only
-
-\- Reference summary: used only for evaluation
-
-\- Generation settings: fixed and recorded
-
-\- Predictions: saved separately from the frozen test data
-
-
-
-Metrics:
-
-
-
-\- ROUGE
-
-\- chrF++
-
-\- BERTScore
-
-
-
-Human evaluation will be performed separately.
-
-
-
-\---
-
-
-
-\## 5. Experiment FT-001: Marathi QLoRA
-
-
-
-Experiment ID:
-
-
-
-`MR-FT-001`
-
-
-
-Purpose:
-
-
-
-Measure the effect of Marathi-specific QLoRA fine-tuning on the same
-
-Gemma base model.
-
-
-
-Configuration:
-
-
-
-\- Base model: `google/gemma-4-E2B-it`
-
-\- Fine-tuning method: QLoRA
-
-\- Training data: Marathi training split
-
-\- Validation data: Marathi validation split
-
-\- Test data: the exact same frozen test set used by MR-BM-001
-
-\- Adapter: Marathi-specific LoRA adapter
-
-
-
-The base model and tokenizer must remain consistent with the baseline.
-
-
-
-The QLoRA experiment must not modify the frozen test set.
-
-
-
-Checkpoint selection will be based on the predefined validation procedure,
-
-which will be documented before training.
-
-
-
-\---
-
-
-
-\## 6. Fair Baseline vs QLoRA Comparison
-
-
-
-MR-BM-001 and MR-FT-001 must use:
-
-
-
-\- the same frozen test examples
-
-\- the same source texts
-
-\- the same reference summaries
-
-\- the same tokenizer/model family
-
-\- the same generation settings
-
-\- the same evaluation implementation
-
-
-
-The reference summary must never be provided to the model as input.
-
-
-
-It is used only after prediction generation for metric calculation.
-
-
-
-\---
-
-
-
-\## 7. Dataset Principles
-
-
-
-Original source datasets will be preserved separately from processed data.
-
-
-
-The dataset pipeline will maintain:
-
-
-
-`raw -> processed -> frozen`
-
-
-
-Raw data:
-
-
-
-\- original source files
-
-\- never modified in place
-
-
-
-Processed data:
-
-
-
-\- cleaned
-
-\- validated
-
-\- deduplicated
-
-\- checked for quality
-
-\- prepared for model training and evaluation
-
-
-
-Frozen data:
-
-
-
-\- final evaluation data
-
-\- immutable after finalization
-
-\- used consistently across baseline and QLoRA experiments
-
-
-
-No test example may be added to training data.
-
-
-
-No test example may be used to tune model or generation settings.
-
-
-
-\---
-
-
-
-\## 8. Data Leakage Prevention
-
-
-
-The dataset pipeline must check for:
-
-
-
-\- exact duplicate source-summary pairs
-
-\- normalized duplicate pairs
-
-\- source leakage across train/validation/test
-
-\- summary leakage across train/validation/test
-
-\- duplicate or near-duplicate evaluation examples
-
-\- inappropriate template overlap where relevant
-
-
-
-The final split must be created before model training.
-
-
-
-The frozen test set must not be modified after experiments begin.
-
-
-
-\---
-
-
-
-\## 9. Evaluation Principle
-
-
-
-Automatic metrics will be calculated from:
-
-
-
-`model prediction vs reference summary`
-
-
-
-The model receives only:
-
-
-
-`source text`
-
-
-
-The reference summary is never included in the model input.
-
-
-
-Prediction files and metric files will be stored separately from the frozen
-
-test dataset.
-
-
-
-\---
-
-
-
-\## 10. Reproducibility
-
-
-
-Each experiment must record:
-
-
-
-\- experiment ID
-
-\- model ID
-
-\- model revision
-
-\- dataset version
-
-\- code version / Git commit
-
-\- Python version
-
-\- PyTorch version
-
-\- Transformers version
-
-\- PEFT version
-
-\- TRL version
-
-\- bitsandbytes version
-
-\- Accelerate version
-
-\- GPU hardware
-
-\- CUDA environment
-
-\- generation settings
-
-\- training hyperparameters where applicable
-
-\- evaluation configuration
-
-
-
-\---
-
-
-
-\## 11. Git and Experiment Discipline
-
-
-
-Each completed research stage must be:
-
-
-
-1\. implemented
-
-2\. verified
-
-3\. documented
-
-4\. committed to Git
-
-5\. pushed to GitHub
-
-
-
-Generated model weights and checkpoints will not be committed directly to
-
-the Git repository.
-
-
-
-Large datasets and artifacts will be handled according to the project's
-
-Git LFS and storage policy.
-
-
-
-\---
-
-
-
-\## 12. Research Integrity
-
-
-
-The project will distinguish between:
-
-
-
-\- measured experimental results
-
-\- documented model capabilities
-
-\- methodological decisions
-
-\- hypotheses
-
-\- interpretations
-
-
-
-Experimental results will not be altered to achieve a desired outcome.
-
-
-
-The frozen test set and evaluation procedure will remain fixed for fair
-
-comparison between the baseline and Marathi QLoRA model.
-
+No result should be edited to produce a preferred outcome. The frozen test remains immutable after baseline visibility.
