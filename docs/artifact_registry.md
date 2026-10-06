@@ -19,8 +19,23 @@ This file is the human-readable registry of canonical research artifacts.
 | Artifact | Purpose | Status | SHA-256 |
 |---|---|---|---|
 | `best_adapter` / checkpoint-1750 | Official E1 adapter | ✅ Selected | `6828bff5f35f384cb6c2a3736f1a0b8c2960b65cac70a874dd4d5230e45bde91` |
-| `MR-FT-001_predictions.csv` | Official E1 frozen-test predictions | ✅ Generated | **Record final SHA-256 after GitHub archive verification** |
-| `MR-FT-001_predictions_checkpoint_0794.csv` | Final cumulative E1 checkpoint | ✅ Generated | **Record final SHA-256 after GitHub archive verification** |
+| `MR-FT-001_predictions.csv` | Official E1 frozen-test predictions | ✅ Generated + verified | `2A258ADB8F87AB810B3365F65919E0617E87449D07004A9CA9EDE89A1B521E` |
+| `MR-FT-001_predictions_checkpoint_0794.csv` | Final cumulative E1 checkpoint | ✅ Generated + verified | `2A258ADB8F87AB810B3365F65919E0617E87449D07004A9CA9EDE89A1B521E` |
+
+## Inference verification
+
+MR-FT-001 final and checkpoint-0794 CSVs were verified against the frozen test on 2026-10-06:
+
+- 794 rows
+- 794 unique `pair_id`
+- exact frozen-test ID order
+- exact frozen-test source text
+- no empty predictions
+- final CSV and checkpoint-0794 CSV are byte-identical
+
+Frozen-test SHA-256 used for verification:
+
+`D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D`
 
 ## Analysis
 
