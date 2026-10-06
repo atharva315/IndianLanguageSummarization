@@ -1,0 +1,216 @@
+name: Research Integrity
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository with LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Compile Python sources
+        run: |
+          python -m compileall -q src scripts
+
+      - name: Verify required research files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          required = [
+              "README.md",
+              "CITATION.cff",
+              "CONTRIBUTING.md",
+              "docs/research_protocol.md",
+              "docs/reproducibility.md",
+              "docs/evaluation_protocol.md",
+              "docs/industry_references.md",
+              "docs/artifact_registry.md",
+              "data/processed/marathi_v1/06_test_frozen.csv",
+              "experiments/baseline/MR-BM-001/baseline_predictions.csv",
+              "experiments/qlora/MR-FT-001/MR-FT-001_config.json",
+              "experiments/qlora/MR-FT-001/MR-FT-001_final_manifest.json",
+          ]
+
+          missing = [p for p in required if not Path(p).is_file()]
+          if missing:
+              raise SystemExit("Missing required files:\n" + "\n".join(missing))
+
+          print("Required research files present.")
+          PY
+
+      - name: Verify frozen test hash
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          path = Path("data/processed/marathi_v1/06_test_frozen.csv")
+          expected = "D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D"
+
+          h = hashlib.sha256(path.read_bytes()).hexdigest().upper()
+
+          print("Frozen test SHA-256:", h)
+
+          if h != expected:
+              raise SystemExit("Frozen test hash mismatch.")
+
+          print("Frozen test hash verified.")
+          PY
+
+      - name: Validate frozen test structure
+        run: |
+          python - <<'PY'
+          import csv
+
+          path = "data/processed/marathi_v1/06_test_frozen.csv"
+
+          with open(path, encoding="utf-8-sig", newline="") as f:
+              rows = list(csv.DictReader(f))
+
+          expected_columns = [
+              "pair_id",
+              "source_file",
+              "source_row",
+              "template_id",
+              "text_chars",
+              "summary_chars",
+              "compression_ratio",
+              "length_bucket",
+              "text",
+              "reference_summary",
+          ]
+
+          if list(rows[0].keys()) != expected_columns:
+              raise SystemExit("Frozen test schema mismatch.")
+
+          if len(rows) != 794:
+              raise SystemExit(f"Expected 794 rows, found {len(rows)}.")
+
+          ids = [r["pair_id"] for r in rows]
+
+          if len(ids) != len(set(ids)):
+              raise SystemExit("Frozen test contains duplicate pair_id values.")
+
+          if any(not r["text"].strip() for r in rows):
+              raise SystemExit("Frozen test contains empty source text.")
+
+          if any(not r["reference_summary"].strip() for r in rows):
+              raise SystemExit("Frozen test contains empty reference summaries.")
+
+          print("Frozen test structure verified.")
+          PY
+
+      - name: Validate baseline predictions
+        run: |
+          python - <<'PY'
+          import csv
+
+          pred = "experiments/baseline/MR-BM-001/baseline_predictions.csv"
+          test = "data/processed/marathi_v1/06_test_frozen.csv"
+
+          with open(pred, encoding="utf-8-sig", newline="") as f:
+              pred_rows = list(csv.DictReader(f))
+
+          with open(test, encoding="utf-8-sig", newline="") as f:
+              test_rows = list(csv.DictReader(f))
+
+          expected = ["pair_id", "text", "model_summary"]
+
+          if list(pred_rows[0].keys()) != expected:
+              raise SystemExit("Baseline prediction schema mismatch.")
+
+          if len(pred_rows) != 794:
+              raise SystemExit("Baseline prediction row count mismatch.")
+
+          pred_ids = [r["pair_id"] for r in pred_rows]
+          test_ids = [r["pair_id"] for r in test_rows]
+
+          if pred_ids != test_ids:
+              raise SystemExit("Baseline prediction ID/order mismatch.")
+
+          pred_text = [r["text"] for r in pred_rows]
+          test_text = [r["text"] for r in test_rows]
+
+          if pred_text != test_text:
+              raise SystemExit("Baseline prediction source-text mismatch.")
+
+          if any(not r["model_summary"].strip() for r in pred_rows):
+              raise SystemExit("Baseline contains empty summaries.")
+
+          print("Baseline predictions verified.")
+          PY
+
+      - name: Validate E1 predictions when archived
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import csv
+
+          pred_path = Path("experiments/qlora/MR-FT-001/inference/MR-FT-001_predictions.csv")
+          test_path = Path("data/processed/marathi_v1/06_test_frozen.csv")
+
+          if not pred_path.exists():
+              print("E1 prediction CSV not archived yet; skipping optional check.")
+              raise SystemExit(0)
+
+          with pred_path.open(encoding="utf-8-sig", newline="") as f:
+              pred = list(csv.DictReader(f))
+
+          with test_path.open(encoding="utf-8-sig", newline="") as f:
+              test = list(csv.DictReader(f))
+
+          if not pred:
+              raise SystemExit("E1 prediction CSV is empty.")
+
+          if list(pred[0].keys()) != ["pair_id", "text", "model_summary"]:
+              raise SystemExit("E1 prediction schema mismatch.")
+
+          if len(pred) != 794:
+              raise SystemExit("E1 prediction row count mismatch.")
+
+          if [r["pair_id"] for r in pred] != [r["pair_id"] for r in test]:
+              raise SystemExit("E1 prediction ID/order mismatch.")
+
+          if [r["text"] for r in pred] != [r["text"] for r in test]:
+              raise SystemExit("E1 source-text mismatch.")
+
+          if any(not r["model_summary"].strip() for r in pred):
+              raise SystemExit("E1 contains empty summaries.")
+
+          print("E1 predictions verified.")
+          PY
+
+      - name: Reject accidental model-state commits
+        run: |
+          set -e
+          forbidden="$(git ls-files | grep -E '(^|/)(checkpoint-[0-9]+|adapter_model\.(bin|safetensors)|model\.(bin|safetensors)|optimizer\.pt|scheduler\.pt|rng_state.*\.pth)$' || true)"
+          if [ -n "$forbidden" ]; then
+            echo "Forbidden model-state files tracked:"
+            echo "$forbidden"
+            exit 1
+          fi
+          echo "No accidental model-state files are tracked."
+
+      - name: Validate LFS policy
+        run: |
+          grep -q '^\*\.csv filter=lfs' .gitattributes
+          grep -q '^\*\.json filter=lfs' .gitattributes
+          grep -q '^\*\.zip filter=lfs' .gitattributes
+          echo "LFS policy entries verified."

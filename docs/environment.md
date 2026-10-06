@@ -1,112 +1,59 @@
-\# Development Environment
+# Development and Training Environment
 
+## Local development
 
+The local machine is used for data preparation, code development, evaluation, tokenizer analysis, documentation, and Git/GitHub workflows.
 
-\## Purpose
+- Python: 3.13
+- GPU: NVIDIA GeForce RTX 2050
+- VRAM: 4 GB
+- Driver: 560.94
+- CUDA reported by `nvidia-smi`: 12.6
 
+Verified local packages:
 
+- PyTorch: 2.14.0+cu126
+- Transformers: 5.17.0
+- Datasets: 5.0.1
+- Accelerate: 1.15.0
+- PEFT: 0.20.0
+- TRL: 1.13.0
+- bitsandbytes: 0.50.2
+- Evaluate: 0.4.6
+- Pandas: 3.0.5
+- Safetensors: 0.8.0
 
-This document records the local development environment used for the Marathi
+The local package snapshot is stored in [requirements-local.txt](../requirements-local.txt).
 
-Gemma summarization research project.
+## Kaggle cloud environment used for MR-FT-001
 
+The final validated training/inference runtime used:
 
+- Python: 3.13.15
+- PyTorch: 2.11.0+cu128
+- CUDA: 12.8
+- GPU: 2 × NVIDIA Tesla T4 (~14.56 GB each)
+- Transformers: 5.17.0 during the validated training run
+- PEFT: 0.20.0
+- Datasets: 4.8.5
+- Accelerate: 1.14.0
+- TRL: 1.13.0
+- bitsandbytes: 0.50.2
 
-The local machine is used for data preparation, code development,
+The inference recovery session also verified:
 
-evaluation, tokenizer analysis, documentation, and Git/GitHub workflows.
+- CUDA available
+- Tesla T4 available
+- bitsandbytes 0.50.2
+- pinned Gemma revision
+- NF4 + double quantization + FP16 compute
+- best adapter loaded successfully
+- 1-example resume smoke test passed before resuming
 
+## Important distinction
 
+The local and cloud environments are intentionally recorded separately. The local RTX 2050 was not used as the target hardware for Gemma QLoRA training.
 
-Gemma baseline inference and QLoRA training will be performed on cloud GPU
+## Reproducibility note
 
-hardware rather than the local RTX 2050.
-
-
-
-\## Python Environment
-
-
-
-\- Python: 3.13
-
-\- Environment: project-local `.venv`
-
-
-
-\## GPU
-
-
-
-\- GPU: NVIDIA GeForce RTX 2050
-
-\- VRAM: 4 GB
-
-\- NVIDIA Driver: 560.94
-
-\- CUDA reported by `nvidia-smi`: 12.6
-
-
-
-\## Python Packages
-
-
-
-\- PyTorch: 2.14.0+cu126
-
-\- Transformers: 5.17.0
-
-\- Datasets: 5.0.1
-
-\- Accelerate: 1.15.0
-
-\- PEFT: 0.20.0
-
-\- TRL: 1.13.0
-
-\- bitsandbytes: 0.50.2
-
-\- Evaluate: 0.4.6
-
-\- Pandas: 3.0.5
-
-\- Safetensors: 0.8.0
-
-
-
-\## Reproducibility
-
-
-
-The complete local package snapshot is stored in:
-
-
-
-`requirements-local.txt`
-
-
-
-This file represents the verified local development environment.
-
-It is not automatically treated as the cloud training environment.
-
-
-
-The cloud environment will be checked separately for Gemma 4 compatibility
-
-before baseline inference or QLoRA training.
-
-
-
-\## Important Constraint
-
-
-
-The local RTX 2050 has 4 GB VRAM and is not the target hardware for
-
-Gemma 4 training.
-
-
-
-Model training will be performed on suitable cloud GPU hardware.
-
+The exact model revision, dataset hash, training configuration, adapter hash, and inference settings are more important to experiment identity than matching every incidental package version between local and cloud machines.
