@@ -1,58 +1,89 @@
----
-base_model: google/gemma-4-E2B-it
-library_name: transformers
-model_name: qlora_MR-FT-001
-tags:
-- generated_from_trainer
-- sft
-- trl
-licence: license
----
+# MR-FT-001 — Marathi QLoRA Experiment
 
-# Model Card for qlora_MR-FT-001
+## Status
 
-This model is a fine-tuned version of [google/gemma-4-E2B-it](https://huggingface.co/google/gemma-4-E2B-it).
-It has been trained using [TRL](https://github.com/huggingface/trl).
+**Training: complete**  
+**Frozen-test inference: complete (794/794)**  
+**Automatic evaluation: pending**
 
-## Quick start
+## Research purpose
 
-```python
-from transformers import pipeline
+Measure the effect of Marathi-specific QLoRA SFT on the same base model used by MR-BM-001.
 
-question = "If you had a time machine, but could only go to the past or the future once and never return, which would you choose and why?"
-generator = pipeline("text-generation", model="None", device="cuda")
-output = generator([{"role": "user", "content": question}], max_new_tokens=128, return_full_text=False)[0]
-print(output["generated_text"])
-```
+Base model:
 
-## Training procedure
+`google/gemma-4-E2B-it`
 
- 
+Pinned revision:
 
+`b515064b63ff28985d549455f7709f112e8a5e39`
 
+## Data
 
-This model was trained with SFT.
+- Train: 14,020
+- Validation: 796
+- Frozen test: 794
+- Total experimental pool: 15,610
+- Frozen test SHA-256: `D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D`
 
-### Framework versions
+The model never receives `reference_summary` during inference.
 
-- TRL: 1.13.0
-- Transformers: 5.17.0
-- Pytorch: 2.11.0+cu128
-- Datasets: 4.8.5
-- Tokenizers: 0.23.1
+## Training configuration
 
-## Citations
+- 4-bit NF4
+- double quantization
+- FP16 QLoRA compute
+- LoRA r=16
+- alpha=32
+- dropout=0.05
+- bias=none
+- target projections: q/k/v/o + gate/up/down
+- max length: 768
+- per-device batch: 1
+- gradient accumulation: 8
+- 2-GPU effective batch: 16
+- epochs: 3
+- learning rate: 1e-4
+- cosine schedule
+- warmup: 263
+- weight decay: 0.01
+- max grad norm: 1.0
+- gradient checkpointing: enabled
+- paged AdamW 8-bit
+- final AMP mode: disabled
 
+## Checkpoint selection
 
+Best validation checkpoint: **1750**
 
-Cite TRL as:
-    
-```bibtex
-@software{vonwerra2020trl,
-  title   = {{TRL: Transformers Reinforcement Learning}},
-  author  = {von Werra, Leandro and Belkada, Younes and Tunstall, Lewis and Beeching, Edward and Thrush, Tristan and Lambert, Nathan and Huang, Shengyi and Rasul, Kashif and Gallouédec, Quentin},
-  license = {Apache-2.0},
-  url     = {https://github.com/huggingface/trl},
-  year    = {2020}
-}
-```
+Best validation loss: **0.0001272337**
+
+Best adapter SHA-256:
+
+`6828bff5f35f384cb6c2a3736f1a0b8c2960b65cac70a874dd4d5230e45bde91`
+
+Later validation loss increased after the best checkpoint; this is retained as a possible overfitting signal, not removed from the record.
+
+## Inference
+
+Generation settings:
+
+- prompt: `खालील मराठी मजकुराचा अचूक, संक्षिप्त आणि तथ्यसुसंगत सारांश लिहा.`
+- max_new_tokens: 224
+- do_sample: false
+- same frozen 794 examples as MR-BM-001
+- source text only
+
+See [inference/README.md](inference/README.md) for checkpointing and artifact rules.
+
+## Repository contents
+
+- `preparation/`: token-length and architecture evidence
+- `analysis/`: training history, curves, checkpoint summary, post-training analysis
+- `inference/`: prediction/checkpoint provenance
+- `MR-FT-001_config.json`: training configuration
+- `MR-FT-001_final_manifest.json`: final training manifest
+- `MR-FT-001_runtime_config.json`: validated runtime configuration
+- `MR-FT-001_training_start_manifest.json`: training start record
+
+Model weights and full training checkpoints are intentionally not committed to Git.
