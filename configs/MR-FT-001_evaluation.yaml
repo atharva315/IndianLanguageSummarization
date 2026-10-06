@@ -1,0 +1,42 @@
+experiment_id: MR-FT-001
+baseline_experiment_id: MR-BM-001
+dataset_version: marathi_v1
+frozen_test_path: data/processed/marathi_v1/06_test_frozen.csv
+frozen_test_sha256: D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D
+
+prediction_files:
+  baseline: experiments/baseline/MR-BM-001/baseline_predictions.csv
+  qlora: experiments/qlora/MR-FT-001/inference/MR-FT-001_predictions.csv
+
+columns:
+  id: pair_id
+  source: text
+  reference: reference_summary
+  prediction: model_summary
+
+metrics:
+  rouge:
+    names: [rouge1, rouge2, rougeL]
+    use_stemmer: false
+  chrfpp:
+    char_order: 6
+    word_order: 2
+    beta: 2
+    whitespace: false
+  bertscore:
+    model_type: xlm-roberta-large
+    rescale_with_baseline: false
+
+statistics:
+  paired_bootstrap:
+    enabled: true
+    resamples: 10000
+    confidence_level: 0.95
+    seed: 42
+  effect:
+    delta_definition: "E1 - E0"
+
+human_evaluation:
+  prepared_sample_size: 100
+  design: blind_pairwise_ab
+  randomize_display_order: true
