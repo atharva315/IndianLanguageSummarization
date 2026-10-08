@@ -157,7 +157,7 @@ jobs:
           print("Baseline predictions verified.")
           PY
 
-      - name: Validate E1 predictions when archived
+      - name: Validate E1 predictions
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -167,8 +167,7 @@ jobs:
           test_path = Path("data/processed/marathi_v1/06_test_frozen.csv")
 
           if not pred_path.exists():
-              print("E1 prediction CSV not archived yet; skipping optional check.")
-              raise SystemExit(0)
+              raise SystemExit("Required E1 prediction CSV is missing.")
 
           with pred_path.open(encoding="utf-8-sig", newline="") as f:
               pred = list(csv.DictReader(f))
