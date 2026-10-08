@@ -46,6 +46,10 @@ jobs:
               "experiments/baseline/MR-BM-001/baseline_predictions.csv",
               "experiments/qlora/MR-FT-001/MR-FT-001_config.json",
               "experiments/qlora/MR-FT-001/MR-FT-001_final_manifest.json",
+              "experiments/qlora/MR-FT-001/inference/MR-FT-001_predictions.csv",
+              "results/MR-FT-001/paper_summary/MR-FT-001_paper_results.csv",
+              "results/MR-FT-001/paper_summary/MR-FT-001_paper_results.json",
+              "results/MR-FT-001/paper_summary/README.md",
           ]
 
           missing = [p for p in required if not Path(p).is_file()]
@@ -72,6 +76,28 @@ jobs:
               raise SystemExit("Frozen test hash mismatch.")
 
           print("Frozen test hash verified.")
+          PY
+
+      - name: Verify canonical prediction hashes
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          expected = {
+              "experiments/baseline/MR-BM-001/baseline_predictions.csv":
+                  "C67D873A6F762AC75E6708D3F686407059ABAE85A5C9B558836B054BF1BEEFD0",
+              "experiments/qlora/MR-FT-001/inference/MR-FT-001_predictions.csv":
+                  "2A258ADB8F87A7BA810B3365F65919E0617E87449D07004A9CA9EDE89A1B521E",
+          }
+
+          for raw, want in expected.items():
+              path = Path(raw)
+              got = hashlib.sha256(path.read_bytes()).hexdigest().upper()
+              print(path, got)
+              if got != want:
+                  raise SystemExit(f"Hash mismatch for {path}")
+          print("Canonical prediction hashes verified.")
           PY
 
       - name: Validate frozen test structure
