@@ -254,7 +254,7 @@ jobs:
           echo "No accidental model-state files are tracked."
 
             - name: Validate LFS policy
-        run: |
+         run: |
           python - <<'PY'
           from pathlib import Path
 
