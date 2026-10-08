@@ -1,0 +1,27 @@
+{
+  "experiment_id": "MR-FT-001",
+  "evaluation_type": "supplementary_blind_pairwise_human_evaluation",
+  "sample_size": 100,
+  "model_mapping": {
+    "E0": "Base google/gemma-4-E2B-it",
+    "E1": "google/gemma-4-E2B-it + Marathi-specific QLoRA adapter (checkpoint-1750)"
+  },
+  "base_model_revision": "b515064b63ff28985d549455f7709f112e8a5e39",
+  "prompt": "खालील मराठी मजकुराचा अचूक, संक्षिप्त आणि तथ्यसुसंगत सारांश लिहा.",
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 2048,
+    "note": "2048 is a safety ceiling for the supplementary human-evaluation inference, not a target summary length."
+  },
+  "adapter": {
+    "checkpoint": "checkpoint-1750",
+    "sha256": "6828bff5f35f384cb6c2a3736f1a0b8c2960b65cac70a874dd4d5230e45bde91"
+  },
+  "final_model_labeled_results": {
+    "E0": 19,
+    "E1": 27,
+    "Tie": 54
+  },
+  "final_mapping_audit": "Final audited interpretation maps E0 to the base Gemma model and E1 to the Gemma + QLoRA adapter.",
+  "private_ab_mapping": "Not committed to the public repository."
+}

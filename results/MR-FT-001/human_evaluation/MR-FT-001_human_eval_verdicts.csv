@@ -1,0 +1,101 @@
+pair_id,verdict,reason
+mar_eval_001,E0,Covers all points incl. period/cost/time/skills concisely; E1 drops some
+mar_eval_002,E1,E0 has foreign-script garbage and a broken opening; E1 faithful
+mar_eval_003,tie,"Both cover main points; E0 slightly shifts ""village"" meaning, E1 more verbose"
+mar_eval_004,E1,E0 garbled sentence + typo; E1 faithful
+mar_eval_005,E1,E0 omits DPI/interoperability (key point) and is keyword-list style
+mar_eval_006,E1,E0 has Korean fragment and drops power/internet details
+mar_eval_007,tie,Each has one garbled word; both cover the content
+mar_eval_008,E1,E0 has Arabic garbage and garbled sentences
+mar_eval_009,E0,"E0 clean, faithful, concise; E1 adds an unsupported framing"
+mar_eval_010,E1,"E0 has corrupted word and changes ""बदलत"" to ""वाढत"""
+mar_eval_011,E1,"E0 has garbage tokens (""परProjectPath"", mixed-case English)"
+mar_eval_012,E0,Faithful and concise; E1 is nearly a paraphrase of the article
+mar_eval_013,E1,"E0 shifts meaning (internet ""cutoff"") and awkward phrasing"
+mar_eval_014,E1,E0 garbled; E1 faithful though over-formatted
+mar_eval_015,E1,"E0 starts oddly and distorts ""user experience"" point"
+mar_eval_016,E0,"Concise, faithful, keeps key terms; E1 is long"
+mar_eval_017,E1,"E0 has nonsense phrase (""बाजार शाखा"")"
+mar_eval_018,tie,"Both clean; E0 slips ""स्थानिक निर्णय"" for skills, E1 omits human-decision point"
+mar_eval_019,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_020,E1,"E0 distorts opening (""मालवाहतूक सुधारणेपासून..."") and has typo"
+mar_eval_021,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_022,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_023,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_024,E1,E0 first sentence garbled
+mar_eval_025,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_026,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_027,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_028,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_029,E1,E0 drops named entity SHE-LEAPS
+mar_eval_030,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_031,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_032,tie,E0 keeps NFHS-6 but has corrupted token and wrong word; E1 omits NFHS-6
+mar_eval_033,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_034,E1,E0 drops NFHS-6
+mar_eval_035,E0,E0 keeps NFHS-6 and is clean; E1 omits it
+mar_eval_036,E1,"E0 wrong word (""फेज्ड ॲप्लिकेशन""), drops Maharashtra"
+mar_eval_037,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_038,tie,E0 keeps Maharashtra but has corrupted word; E1 omits Maharashtra
+mar_eval_039,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_040,E1,E0 drops AI as the subject
+mar_eval_041,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_042,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_043,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_044,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_045,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_046,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_047,E1,E0 has Gujarati-script garbage
+mar_eval_048,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_049,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_050,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_051,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_052,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_053,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_054,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_055,E1,E0 has Korean/Malayalam garbage and a nonsense final sentence
+mar_eval_056,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_057,E0,"Both keep 2026-27 and classes 3-8; E1 is long, bullet-formatted"
+mar_eval_058,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_059,E0,E0 concise with 2026-27/3-8 kept; E1 nearly article length
+mar_eval_060,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_061,E1,E0 drops UNESCO
+mar_eval_062,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_063,E1,E0 has garbage token and drops UNESCO
+mar_eval_064,E1,E0 garbled passages and distorted cost sentence
+mar_eval_065,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_066,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_067,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_068,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_069,E0,E0 keeps AICTE; E1 drops it
+mar_eval_070,E1,E0 has garbage token
+mar_eval_071,E1,"E0 says idea is ""वेडी"" (wrong) instead of outdated"
+mar_eval_072,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_073,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_074,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_075,E1,E0 drops ILO
+mar_eval_076,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_077,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_078,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_079,E0,E0 keeps 2025-26; E1 drops the year
+mar_eval_080,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_081,E1,"E0 merges template opener into content, mangled meaning"
+mar_eval_082,E0,E0 keeps 2026 for UPI; E1 drops it
+mar_eval_083,E0,E0 keeps 2026; E1 drops it
+mar_eval_084,E0,E0 keeps UPI and 2026 (tense slightly off); E1 drops both
+mar_eval_085,E0,E0 keeps 2026; E1 drops it
+mar_eval_086,E0,"E0 keeps SEBI and 2026; E1 drops 2026, bullet-formatted"
+mar_eval_087,E0,E0 keeps SEBI and 2026; E1 drops 2026
+mar_eval_088,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_089,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_090,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_091,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_092,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_093,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_094,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_095,tie,"Both faithful and comparable (E1 fuller, E0 more concise); no decisive error found"
+mar_eval_096,E1,"E0 has Lao-script garbage; E1 keeps 2026-30, 6.4%, IEA"
+mar_eval_097,E0,"E0 keeps 2026-30, 6.4%, IEA; E1 drops all"
+mar_eval_098,E0,E0 keeps all figures; E1 drops IEA
+mar_eval_099,E0,"E1 distorts (""मागणी वाढवण्यासाठी"") and drops IEA"
+mar_eval_100,E0,E0 keeps 2026-30 and 6.4%; E1 drops the figures

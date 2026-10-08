@@ -104,6 +104,28 @@ Large CSV/JSON artifacts are stored through Git LFS according to `.gitattributes
 
 The selected checkpoint-1750 adapter is identified by hash and configuration; its full learned model state is not committed to this repository.
 
+
+## Supplementary blind human evaluation
+
+The human study is supplementary and does not alter the core research endpoint.
+
+- `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_summary.csv`
+- `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_verdicts.csv`
+- `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_metadata.json`
+
+Final audited model mapping:
+
+- E0 = untouched base Gemma
+- E1 = Gemma + checkpoint-1750 Marathi QLoRA
+
+Final example-level outcome counts:
+
+- E0: 19
+- E1: 27
+- Tie: 54
+
+The private A/B assignment key is intentionally excluded from the public repository.
+
 ## Excluded from the core paper
 
 Do not promote these into the core research evidence:

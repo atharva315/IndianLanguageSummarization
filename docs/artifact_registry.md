@@ -55,6 +55,23 @@ Preparation evidence is under:
 | `results/MR-FT-001/paper_summary/MR-FT-001_paper_results.json` | Statistical configuration + canonical metric results | ✅ Complete | `AEEC801DEB7FA012C5B8C025848EBF13861E5A553E16CCA214335A9110B67B00` |
 | `results/MR-FT-001/paper_summary/README.md` | Human-readable paper-results interpretation | ✅ Complete | `7A12F95FD2CD960561BEAAF2C31B5248D9E66B246AAD046FB5486F1C5E80D27B` |
 
+
+## Supplementary blind human evaluation
+
+| Artifact | Purpose | Status | SHA-256 |
+|---|---|---|---|
+| `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_summary.csv` | Final audited human-preference summary | ✅ Complete | `29e68141daae11836bc9cb8c551b57f08d1c6be6eb480eac8ffbc863554df94f` |
+| `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_verdicts.csv` | Final audited per-example model-labeled verdicts | ✅ Complete | `42c461c8bd45022edac4a08fb2e881b6c10ed9443d2d402506094ad6d9ddfc46` |
+| `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_metadata.json` | Human-evaluation configuration and result metadata | ✅ Complete | (metadata generated from the final audited record) |
+
+Final outcome counts:
+
+- E0 = 19
+- E1 = 27
+- Tie = 54
+
+Private A/B mapping keys are intentionally excluded from the public repository.
+
 ## Storage policy
 
 - Model weights/checkpoints: external/cloud storage

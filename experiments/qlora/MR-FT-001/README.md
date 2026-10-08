@@ -4,7 +4,7 @@
 
 **Training: complete**  
 **Frozen-test inference: complete (794/794)**  
-**Automatic evaluation: pending**
+**Automatic evaluation: complete**
 
 ## Research purpose
 
@@ -87,3 +87,16 @@ See [inference/README.md](inference/README.md) for checkpointing and artifact ru
 - `MR-FT-001_training_start_manifest.json`: training start record
 
 Model weights and full training checkpoints are intentionally not committed to Git.
+
+  
+### Supplementary human evaluation
+
+A blind pairwise human evaluation was completed on 100 independent Marathi examples.
+
+- **E0 (Base Gemma): 19 preferences**
+- **E1 (Gemma + checkpoint-1750 QLoRA): 27 preferences**
+- **Tie: 54**
+
+For this supplementary inference, the shared prompt and deterministic decoding were retained; `max_new_tokens=2048` served only as a safety ceiling rather than a target length.
+
+The public repository stores the final audited verdicts and aggregate result; the private A/B assignment key is not committed.

@@ -15,7 +15,7 @@ The Marathi comparison is:
 
 The same frozen 794-example test set is used for both experiments. The model receives source text only; reference summaries are used only after generation for evaluation.
 
-## Current status — 2026-10-08
+## Current status — 2026-10-09
 
 | Stage | Status |
 |---|---|
@@ -33,6 +33,7 @@ The same frozen 794-example test set is used for both experiments. The model rec
 | Length-bucket analysis | ✅ Complete |
 | Data-leakage audit | ✅ Complete |
 | Blind AI/LLM judge | ✅ Complete (supplementary Marathi analysis) |
+| Blind human evaluation | ✅ Complete (100 example-level verdicts) |
 | Independent real-Marathi benchmark | ⏸️ Deferred from core multilingual paper |
 | Hindi / Tamil experiments | ⏳ Separate student work |
 
@@ -128,7 +129,7 @@ Core statistical analysis:
 
 Supplementary Marathi analysis:
 
-- blind A/B evaluation package on the prepared 100-example set
+- blind A/B human evaluation on the independent 100-example set; final audited outcomes: E0 = 19, E1 = 27, Tie = 54
 - AI/LLM-judge results and targeted qualitative/error analysis
 
 An independent real-Marathi generalization benchmark is documented as a deferred supplementary direction rather than a core multilingual-paper requirement.

@@ -28,3 +28,16 @@ These values are macro sentence-level means used for paired significance analysi
 ## Interpretation boundary
 
 These results support the statement that E1 outperformed E0 on the defined automatic metrics for this frozen Marathi test. They do not, by themselves, establish broad real-world Marathi generalization because the internal dataset is template-heavy.
+
+
+## Supplementary human evaluation
+
+A separate blind pairwise human evaluation was conducted on 100 independent Marathi examples.
+
+| Outcome | Count |
+|---|---:|
+| E0 — Base Gemma | 19 |
+| E1 — Gemma + QLoRA | 27 |
+| Tie | 54 |
+
+E1 therefore received more preferences than E0, while ties were the largest outcome (54%). This is supplementary evidence and does not replace the core automatic-metric endpoint.
