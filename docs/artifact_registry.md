@@ -47,6 +47,14 @@ Preparation evidence is under:
 
 `experiments/qlora/MR-FT-001/preparation/`
 
+## Core paper result summary
+
+| Artifact | Purpose | Status | SHA-256 |
+|---|---|---|---|
+| `results/MR-FT-001/paper_summary/MR-FT-001_paper_results.csv` | Canonical five-metric E0/E1 table | ✅ Complete | `41B4ED255AC4DBFA148A4FB4329907B62BA463A8287892B7F7B9F889BC6D4F2E` |
+| `results/MR-FT-001/paper_summary/MR-FT-001_paper_results.json` | Statistical configuration + canonical metric results | ✅ Complete | `AEEC801DEB7FA012C5B8C025848EBF13861E5A553E16CCA214335A9110B67B00` |
+| `results/MR-FT-001/paper_summary/README.md` | Human-readable paper-results interpretation | ✅ Complete | `7A12F95FD2CD960561BEAAF2C31B5248D9E66B246AAD046FB5486F1C5E80D27B` |
+
 ## Storage policy
 
 - Model weights/checkpoints: external/cloud storage
