@@ -118,11 +118,20 @@ Primary automatic metrics:
 - chrF++
 - BERTScore
 
-Secondary evaluation:
+Core statistical analysis:
 
-- blind human A/B comparison on the prepared 100-example set
-- targeted error analysis
-- independent real-Marathi generalization benchmark
+- paired bootstrap confidence intervals
+- paired sign-flip randomization
+- Holm correction across the five primary metrics
+- length-bucket analysis
+- data-leakage/integrity audit
+
+Supplementary Marathi analysis:
+
+- blind A/B evaluation package on the prepared 100-example set
+- AI/LLM-judge results and targeted qualitative/error analysis
+
+An independent real-Marathi generalization benchmark is documented as a deferred supplementary direction rather than a core multilingual-paper requirement.
 
 Metric definitions, normalization, aggregation, and statistical testing are documented in [docs/evaluation_protocol.md](docs/evaluation_protocol.md).
 
