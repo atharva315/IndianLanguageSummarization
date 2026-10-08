@@ -253,9 +253,26 @@ jobs:
           fi
           echo "No accidental model-state files are tracked."
 
-      - name: Validate LFS policy
+            - name: Validate LFS policy
         run: |
-          grep -q '^\*\.csv filter=lfs' .gitattributes
-          grep -q '^\*\.json filter=lfs' .gitattributes
-          grep -q '^\*\.zip filter=lfs' .gitattributes
-          echo "LFS policy entries verified."
+          python - <<'PY'
+          from pathlib import Path
+
+          lines = Path(".gitattributes").read_text(encoding="utf-8-sig").splitlines()
+
+          required = [
+              "*.csv filter=lfs diff=lfs merge=lfs -text",
+              "*.json filter=lfs diff=lfs merge=lfs -text",
+              "*.zip filter=lfs diff=lfs merge=lfs -text",
+          ]
+
+          missing = [entry for entry in required if entry not in lines]
+
+          if missing:
+              print("Missing required LFS policy entries:")
+              for entry in missing:
+                  print(entry)
+              raise SystemExit(1)
+
+          print("LFS policy entries verified.")
+          PY
