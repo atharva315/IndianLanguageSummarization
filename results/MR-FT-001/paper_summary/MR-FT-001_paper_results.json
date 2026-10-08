@@ -1,3 +1,83 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:aeec801deb7fa012c5b8c025848ebf13861e5a553e16cca214335a9110b67b00
-size 1681
+{
+  "experiment_id": "MR-FT-001",
+  "baseline_id": "MR-BM-001",
+  "frozen_test_size": 794,
+  "delta_definition": "E1 - E0",
+  "bootstrap_resamples": 10000,
+  "paired_sign_flip_resamples": 10000,
+  "seed": 20261007,
+  "multiple_comparison": "holm",
+  "alpha": 0.05,
+  "metrics": [
+    {
+      "metric": "ROUGE-1",
+      "e0": 0.436024,
+      "e1": 0.999657,
+      "delta": 0.563633,
+      "ci_low": 0.557675,
+      "ci_high": 0.56948,
+      "adjusted_p": 0.0005,
+      "e1_wins": 794,
+      "e0_wins": 0,
+      "ties": 0
+    },
+    {
+      "metric": "ROUGE-2",
+      "e0": 0.205539,
+      "e1": 0.999297,
+      "delta": 0.793758,
+      "ci_low": 0.788239,
+      "ci_high": 0.799287,
+      "adjusted_p": "<=0.0001",
+      "e1_wins": 794,
+      "e0_wins": 0,
+      "ties": 0
+    },
+    {
+      "metric": "ROUGE-L",
+      "e0": 0.379139,
+      "e1": 0.999657,
+      "delta": 0.620517,
+      "ci_low": 0.614516,
+      "ci_high": 0.626629,
+      "adjusted_p": "<=0.0001",
+      "e1_wins": 794,
+      "e0_wins": 0,
+      "ties": 0
+    },
+    {
+      "metric": "chrF++",
+      "e0": 48.795818,
+      "e1": 99.969946,
+      "delta": 51.174127,
+      "ci_low": 50.807501,
+      "ci_high": 51.549055,
+      "adjusted_p": "<=0.0001",
+      "e1_wins": 794,
+      "e0_wins": 0,
+      "ties": 0
+    },
+    {
+      "metric": "BERTScore-F1",
+      "e0": 0.909525,
+      "e1": 0.99999,
+      "delta": 0.090465,
+      "ci_low": 0.089569,
+      "ci_high": 0.091361,
+      "adjusted_p": "<=0.0001",
+      "e1_wins": 794,
+      "e0_wins": 0,
+      "ties": 0
+    }
+  ],
+  "corpus_chrf": {
+    "e0": 49.132615,
+    "e1": 99.977923
+  },
+  "supplementary_human_evaluation": {
+    "examples": 100,
+    "e0_preferred": 19,
+    "e1_preferred": 27,
+    "ties": 54
+  }
+}
