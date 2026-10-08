@@ -1,6 +1,3 @@
-metric,aggregation,e0,e1,delta,ci_low,ci_high,p_value,holm_adjusted_p,n,e1_wins,e0_wins,ties
-ROUGE-1,macro_sentence_f1,0.436024,0.999657,0.563633,0.557675,0.569480,"<=0.0001",0.0005,794,794,0,0
-ROUGE-2,macro_sentence_f1,0.205539,0.999297,0.793758,0.788239,0.799287,"<=0.0001","<=0.0001",794,794,0,0
-ROUGE-L,macro_sentence_f1,0.379139,0.999657,0.620517,0.614516,0.626629,"<=0.0001","<=0.0001",794,794,0,0
-chrF++,macro_sentence_score,48.795818,99.969946,51.174127,50.807501,51.549055,"<=0.0001","<=0.0001",794,794,0,0
-BERTScore-F1,macro_sentence_f1,0.909525,0.999990,0.090465,0.089569,0.091361,"<=0.0001","<=0.0001",794,794,0,0
+version https://git-lfs.github.com/spec/v1
+oid sha256:41b4ed255ac4dbfa148a4fb4329907b62ba463a8287892b7f7b9f889bc6d4f2e
+size 626
