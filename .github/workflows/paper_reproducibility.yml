@@ -1,0 +1,143 @@
+name: Paper Reproducibility
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  paper-reproducibility:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository with LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Validate paper result artifacts
+        run: |
+          python - <<'PY'
+          import csv
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+
+          required = [
+              "configs/MR-FT-001_evaluation.yaml",
+              "data/processed/marathi_v1/06_test_frozen.csv",
+              "experiments/baseline/MR-BM-001/baseline_predictions.csv",
+              "experiments/qlora/MR-FT-001/inference/MR-FT-001_predictions.csv",
+              "results/MR-FT-001/paper_summary/MR-FT-001_paper_results.csv",
+              "results/MR-FT-001/paper_summary/MR-FT-001_paper_results.json",
+              "results/MR-FT-001/paper_summary/README.md",
+          ]
+
+          missing = [p for p in required if not (root / p).is_file()]
+          if missing:
+              raise SystemExit("Missing required paper artifacts:\n" + "\n".join(missing))
+
+          expected_hashes = {
+              "data/processed/marathi_v1/06_test_frozen.csv":
+                  "D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D",
+              "experiments/baseline/MR-BM-001/baseline_predictions.csv":
+                  "C67D873A6F762AC75E6708D3F686407059ABAE85A5C9B558836B054BF1BEEFD0",
+              "experiments/qlora/MR-FT-001/inference/MR-FT-001_predictions.csv":
+                  "2A258ADB8F87A7BA810B3365F65919E0617E87449D07004A9CA9EDE89A1B521E",
+          }
+
+          for path, expected in expected_hashes.items():
+              got = hashlib.sha256((root / path).read_bytes()).hexdigest().upper()
+              print(f"{path}: {got}")
+              if got != expected:
+                  raise SystemExit(f"Hash mismatch: {path}")
+
+          with open(root / "results/MR-FT-001/paper_summary/MR-FT-001_paper_results.csv",
+                    encoding="utf-8-sig", newline="") as f:
+              rows = list(csv.DictReader(f))
+
+          expected_metrics = ["ROUGE-1", "ROUGE-2", "ROUGE-L", "chrF++", "BERTScore-F1"]
+          if [r["metric"] for r in rows] != expected_metrics:
+              raise SystemExit("Paper result metric order/content mismatch.")
+
+          if len(rows) != 5:
+              raise SystemExit("Paper result table must contain exactly five primary metrics.")
+
+          for row in rows:
+              for key in ["e0", "e1", "delta", "ci_low", "ci_high"]:
+                  float(row[key])
+              if row["e1_wins"] != "794" or row["e0_wins"] != "0" or row["ties"] != "0":
+                  raise SystemExit(f"Pairwise win/tie counts inconsistent for {row['metric']}.")
+
+          with open(root / "results/MR-FT-001/paper_summary/MR-FT-001_paper_results.json",
+                    encoding="utf-8") as f:
+              meta = json.load(f)
+
+          if meta["experiment_id"] != "MR-FT-001":
+              raise SystemExit("Experiment ID mismatch.")
+          if meta["baseline_id"] != "MR-BM-001":
+              raise SystemExit("Baseline ID mismatch.")
+          if meta["frozen_test_size"] != 794:
+              raise SystemExit("Frozen-test size mismatch.")
+          if meta["delta_definition"] != "E1 - E0":
+              raise SystemExit("Delta definition mismatch.")
+          if meta["bootstrap_resamples"] != 10000:
+              raise SystemExit("Bootstrap resample count mismatch.")
+          if meta["paired_sign_flip_resamples"] != 10000:
+              raise SystemExit("Sign-flip resample count mismatch.")
+          if meta["seed"] != 20261007:
+              raise SystemExit("Statistical-analysis seed mismatch.")
+          if meta["multiple_comparison"].lower() != "holm":
+              raise SystemExit("Multiple-comparison correction mismatch.")
+          if meta["alpha"] != 0.05:
+              raise SystemExit("Alpha mismatch.")
+
+          print("Paper result artifacts and provenance verified.")
+          PY
+
+      - name: Validate evaluation configuration
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          text = Path("configs/MR-FT-001_evaluation.yaml").read_text(encoding="utf-8-sig")
+
+          required_fragments = [
+              "experiment_id: MR-FT-001",
+              "baseline_experiment_id: MR-BM-001",
+              "resamples: 10000",
+              "seed: 20261007",
+              "paired_sign_flip:",
+              "method: holm",
+              'delta_definition: "E1 - E0"',
+              "char_order: 6",
+              "word_order: 2",
+              "beta: 2",
+              "model_type: xlm-roberta-large",
+              "rescale_with_baseline: false",
+          ]
+
+          missing = [x for x in required_fragments if x not in text]
+          if missing:
+              raise SystemExit("Evaluation configuration missing:\n" + "\n".join(missing))
+
+          print("Evaluation configuration verified.")
+          PY
+
+      - name: Compile project Python sources
+        run: |
+          python -m compileall -q src scripts
+
+      - name: Research artifact gate passed
+        run: echo "Paper reproducibility gate passed."
