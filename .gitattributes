@@ -6,3 +6,6 @@
 # Human-evaluation artifacts are intentionally kept as normal Git text files
 results/MR-FT-001/human_evaluation/*.csv -filter diff merge text
 results/MR-FT-001/human_evaluation/*.json -filter diff merge text
+
+results/MR-FT-001/paper_summary/MR-FT-001_paper_results.csv -filter diff merge text
+results/MR-FT-001/paper_summary/MR-FT-001_paper_results.json -filter diff merge text
