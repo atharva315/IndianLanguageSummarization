@@ -1,0 +1,83 @@
+{
+  "experiment_id": "MR-FT-001",
+  "baseline_id": "MR-BM-001",
+  "dataset": "marathi_v1",
+  "frozen_test_size": 794,
+  "delta_definition": "E1 - E0",
+  "confidence_level": 0.95,
+  "bootstrap_resamples": 10000,
+  "paired_sign_flip_resamples": 10000,
+  "seed": 20261007,
+  "multiple_comparison": "Holm",
+  "alpha": 0.05,
+  "primary_metrics": [
+    "ROUGE-1",
+    "ROUGE-2",
+    "ROUGE-L",
+    "chrF++",
+    "BERTScore-F1"
+  ],
+  "note": "Values are macro sentence-level means used for paired significance analysis. Corpus-level chrF++ is 49.132615 (E0) vs 99.977923 (E1).",
+  "results": [
+    {
+      "metric": "ROUGE-1",
+      "e0": 0.436024,
+      "e1": 0.999657,
+      "delta": 0.563633,
+      "ci": [
+        0.557675,
+        0.56948
+      ],
+      "p": "<=0.0001",
+      "holm_p": 0.0005
+    },
+    {
+      "metric": "ROUGE-2",
+      "e0": 0.205539,
+      "e1": 0.999297,
+      "delta": 0.793758,
+      "ci": [
+        0.788239,
+        0.799287
+      ],
+      "p": "<=0.0001",
+      "holm_p": "<=0.0001"
+    },
+    {
+      "metric": "ROUGE-L",
+      "e0": 0.379139,
+      "e1": 0.999657,
+      "delta": 0.620517,
+      "ci": [
+        0.614516,
+        0.626629
+      ],
+      "p": "<=0.0001",
+      "holm_p": "<=0.0001"
+    },
+    {
+      "metric": "chrF++",
+      "e0": 48.795818,
+      "e1": 99.969946,
+      "delta": 51.174127,
+      "ci": [
+        50.807501,
+        51.549055
+      ],
+      "p": "<=0.0001",
+      "holm_p": "<=0.0001"
+    },
+    {
+      "metric": "BERTScore-F1",
+      "e0": 0.909525,
+      "e1": 0.99999,
+      "delta": 0.090465,
+      "ci": [
+        0.089569,
+        0.091361
+      ],
+      "p": "<=0.0001",
+      "holm_p": "<=0.0001"
+    }
+  ]
+}
