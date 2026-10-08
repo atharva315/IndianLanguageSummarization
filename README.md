@@ -15,22 +15,28 @@ The Marathi comparison is:
 
 The same frozen 794-example test set is used for both experiments. The model receives source text only; reference summaries are used only after generation for evaluation.
 
-## Current status — 2026-10-06
+## Current status — 2026-10-08
 
 | Stage | Status |
 |---|---|
 | Marathi dataset curation and split | ✅ Complete |
 | Frozen test creation | ✅ Complete |
 | Tokenizer diagnostic | ✅ Complete |
-| MR-BM-001 baseline inference | ✅ Complete |
+| MR-BM-001 baseline inference | ✅ Complete (794/794) |
 | MR-FT-001 QLoRA training | ✅ Complete |
 | MR-FT-001 training analysis | ✅ Complete |
 | MR-FT-001 frozen-test inference | ✅ Complete (794/794) |
-| Automatic metrics | ⏳ Next |
-| Blind human A/B evaluation | ⏳ Next |
-| Error analysis | ⏳ Next |
-| Independent real-Marathi generalization test | ⏳ Planned |
+| ROUGE-1/2/L | ✅ Complete + corrected Unicode-aware evaluation |
+| chrF++ | ✅ Complete |
+| BERTScore | ✅ Complete |
+| Paired statistical analysis | ✅ Complete (10,000 bootstrap + 10,000 sign-flip; Holm correction) |
+| Length-bucket analysis | ✅ Complete |
+| Data-leakage audit | ✅ Complete |
+| Blind AI/LLM judge | ✅ Complete (supplementary Marathi analysis) |
+| Independent real-Marathi benchmark | ⏸️ Deferred from core multilingual paper |
 | Hindi / Tamil experiments | ⏳ Separate student work |
+
+The core Marathi research checkpoint for the multilingual paper is now **automatic metrics + paired statistics + length-specific analysis + leakage/integrity audit**. The AI/LLM judge is retained as supplementary evidence and is not required for the other languages.
 
 ## Dataset: Marathi v1
 
