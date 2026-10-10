@@ -53,6 +53,8 @@ The dataset was assembled from external websites and article-summary resources, 
 
 Dataset documentation: [data/processed/marathi_v1/README.txt](data/processed/marathi_v1/README.txt)
 
+Data provenance and template balancing: [docs/data_provenance_and_template_balancing.md](docs/data_provenance_and_template_balancing.md)
+
 ## Model and training
 
 Base model:
