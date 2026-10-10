@@ -40,7 +40,7 @@ Pipeline:
 
 `raw -> cleaned -> normalized/deduplicated -> template QA -> template-aware split -> frozen test`
 
-The current dataset is synthetic/template-heavy. Template separation reduces structural leakage risk, but it does not by itself prove semantic diversity or real-world generalization.
+The dataset was assembled from external websites and article-summary resources, including BBC/XL-Sum and additional sources. Preprocessing was applied before AI-assisted template/domain analysis; recurring structures were categorized, representation was balanced, and the final records were shuffled and split with template awareness. This means template patterns were analysed in externally sourced material; it does not mean the articles were synthetically generated. Template separation reduces structural leakage risk, but it does not by itself prove semantic diversity or broad real-world generalization. Preserve the original source URLs, collection metadata, licence/terms, and the template-labeling procedure as part of the data provenance record.
 
 ## 4. Leakage controls
 
