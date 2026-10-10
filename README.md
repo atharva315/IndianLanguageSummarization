@@ -55,6 +55,8 @@ Dataset documentation: [data/processed/marathi_v1/README.txt](data/processed/mar
 
 Data provenance and template balancing: [docs/data_provenance_and_template_balancing.md](docs/data_provenance_and_template_balancing.md)
 
+Model selection and QLoRA rationale: [docs/model_selection_and_qlora_rationale.md](docs/model_selection_and_qlora_rationale.md)
+
 ## Model and training
 
 Base model:
