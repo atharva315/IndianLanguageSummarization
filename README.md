@@ -49,7 +49,7 @@ The core Marathi research checkpoint for the multilingual paper is now **automat
 - Split: **template-aware**
 - Frozen test SHA-256: `D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D`
 
-The dataset is synthetic/template-heavy. Structural leakage was explicitly controlled, but semantic quality is not assumed from the split alone. An independent real-Marathi benchmark is therefore recommended before making broad generalization claims.
+The dataset was assembled from external websites and article-summary resources, including BBC/XL-Sum and other sources. The text was preprocessed, then recurring structural templates/domains were identified with AI-assisted analysis and the retained examples were balanced and shuffled before a template-aware split. The dataset can still contain repeated structural patterns; this is different from saying the records were synthetically created. Structural leakage was explicitly controlled, but broad real-world generalization should be validated on a separately sourced benchmark. Source-level URLs, collection details, and licences should be kept in the data provenance record.
 
 Dataset documentation: [data/processed/marathi_v1/README.txt](data/processed/marathi_v1/README.txt)
 
