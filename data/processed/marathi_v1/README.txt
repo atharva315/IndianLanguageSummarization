@@ -18,9 +18,9 @@ The final package recomputes the split so a structural template family does not 
 train/validation/test.
 
 Why the template cap exists:
-Many records are synthetic variations of the same underlying structure. Without a cap,
-the model can overfit repeated templates while validation/test appear deceptively strong.
-The cap retains diversity while preserving multiple examples per template family.
+The collected articles and summaries came from external websites and article-summary resources, including BBC/XL-Sum and other sources. An AI-assisted analysis was used to identify/categorize recurring templates and domains; the examples were then balanced and shuffled before a template-aware split. Some externally sourced records can share the same underlying structure even when their wording or named entities differ. Without a cap, a few repeated structures can dominate training or make evaluation appear deceptively strong.
+
+A template-family cap of 12 means: retain no more than 12 records from any one identified template family. It does NOT mean there are only 12 template families, nor does it mean the whole dataset contains only 12 examples. Keep source URLs, collection dates, licence/terms, and the template-analysis procedure in the data provenance record.
 
 Recommended use:
 04_train_sft.csv        -> QLoRA training
@@ -31,8 +31,6 @@ Recommended use:
 Frozen test SHA-256:
 D93B3EE80E6AE306C1C1F02855A244AE2C38F46D587F3C39C8C415F0011A117D
 
-The current dataset is synthetic/template-heavy. Structural leakage controls are
-implemented, but semantic quality and real-world generalization should be evaluated
-on an independent real-Marathi benchmark before broad claims are made.
+The current dataset is assembled from external sources and contains recurring structural templates. Structural leakage controls are implemented, but source quality, semantic correctness, source diversity, and real-world generalization should still be evaluated on a separately sourced real-Marathi benchmark before broad claims are made.
 
 Do NOT change 06_test_frozen.csv after baseline results are visible.
