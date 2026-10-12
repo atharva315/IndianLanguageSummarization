@@ -81,28 +81,20 @@ For paired E0/E1 comparisons, use paired bootstrap resampling or another documen
 
 The statistical method, number of resamples, random seed, confidence level, and multiple-comparison handling must be recorded before final claims are made.
 
-## Human A/B evaluation
+## Supplementary Google Forms blind human evaluation
 
-Use the prepared 100-example human-evaluation set.
+A separate 100-example sample was evaluated through Google Forms. This was a human preference study, not an automated model-judge evaluation.
 
-Design:
+For each example:
 
-1. show the source article
-2. show two anonymized summaries A/B
-3. randomize which system appears as A/B
-4. do not reveal E0/E1 identity to the evaluator
-5. collect a preference and optional quality reason
-6. retain the mapping privately for analysis
+1. Display the source Marathi article as the form question/prompt.
+2. Provide two answer options containing only the generated E0 and E1 summary text. Do not show A/B tags, model names, E0/E1 labels, or other origin tags beside the summaries.
+3. Shuffle the E0/E1 order for each example so either model's summary can appear as the first option.
+4. Set the third option to **Tie**.
+5. Ask: **Which summary do you prefer?**
+6. Retain the per-example option-position-to-model mapping privately and apply it to the collected responses to calculate E0, E1, and Tie counts.
 
-Recommended preference dimensions:
-
-- factual accuracy
-- important-content coverage
-- fluency/readability
-- conciseness
-- overall preference
-
-Do not use human preferences to tune the frozen-test prompt after the comparison.
+The reported audited outcome counts are E0 = 19, E1 = 27, and Tie = 54. The private option-order mapping is not committed to the public repository. Do not use these human preferences to tune the frozen-test prompt after the comparison.
 
 ## Error analysis
 
