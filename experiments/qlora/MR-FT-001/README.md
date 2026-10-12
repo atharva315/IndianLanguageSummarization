@@ -91,7 +91,7 @@ Model weights and full training checkpoints are intentionally not committed to G
   
 ### Supplementary human evaluation
 
-A blind pairwise human evaluation was completed on 100 independent Marathi examples.
+A blind pairwise human-preference evaluation was completed through Google Forms on 100 independent Marathi examples. For each example, the source article was shown as the question; the first and second response options contained only the E0/E1 summary text, with their order shuffled per example and no model labels or A/B tags. The third option was **Tie**. See [the human-evaluation protocol](../../../docs/human_eval_protocol.md) for the full procedure.
 
 - **E0 (Base Gemma): 19 preferences**
 - **E1 (Gemma + checkpoint-1750 QLoRA): 27 preferences**
@@ -99,4 +99,4 @@ A blind pairwise human evaluation was completed on 100 independent Marathi examp
 
 For this supplementary inference, the shared prompt and deterministic decoding were retained; `max_new_tokens=2048` served only as a safety ceiling rather than a target length.
 
-The public repository stores the final audited verdicts and aggregate result; the private A/B assignment key is not committed.
+The public repository stores the final audited verdicts and aggregate result; the private per-example option-position-to-model mapping is not committed.
