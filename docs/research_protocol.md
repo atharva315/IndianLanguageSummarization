@@ -133,11 +133,15 @@ Primary metrics:
 - chrF++
 - BERTScore
 
-Human evaluation:
+Supplementary human evaluation:
 
-- blind A/B comparison
-- fixed prepared sample
-- model identity hidden from evaluators
+- conducted through Google Forms on a separate 100-example Marathi sample
+- the source article appeared as the form question
+- first and second answer options displayed only the E0/E1 summary text, with option order shuffled per example and no A/B or model-identifying tags
+- the third answer option was Tie
+- a private per-example option-position-to-model mapping was used to assign collected preferences to E0, E1, or Tie
+- audited outcomes: E0 = 19, E1 = 27, Tie = 54
+- see [the detailed human-evaluation protocol](human_eval_protocol.md)
 
 Any external/generalization benchmark must remain outside the Marathi v1 training pool.
 
