@@ -8,7 +8,7 @@ The core research evidence is:
 
 `E0 vs E1 → ROUGE-1/2/L → chrF++ → BERTScore → paired bootstrap/sign-flip statistics → length analysis → leakage/integrity audit`
 
-AI/LLM-judge results, human-evaluation results, and the unfinished external XL-Sum inference are **post-cutoff/supplementary artifacts and are not part of the core research claim**.
+The Google Forms blind human-preference evaluation is a completed **supplementary study**, separate from the core automatic-metric endpoint. The unfinished external XL-Sum inference remains outside the current core research results.
 
 ## Canonical experiment inputs
 
@@ -124,13 +124,12 @@ Final example-level outcome counts:
 - E1: 27
 - Tie: 54
 
-The private A/B assignment key is intentionally excluded from the public repository.
+The private per-example mapping between the first/second Google Forms option and E0/E1 is intentionally excluded from the public repository.
 
 ## Excluded from the core paper
 
 Do not promote these into the core research evidence:
 
-- AI/LLM-judge results
 - private human-evaluation keys/mappings
 - preliminary ROUGE results
 - duplicate backup directories
