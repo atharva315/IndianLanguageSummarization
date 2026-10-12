@@ -32,12 +32,11 @@ The same frozen 794-example test set is used for both experiments. The model rec
 | Paired statistical analysis | ✅ Complete (10,000 bootstrap + 10,000 sign-flip; Holm correction) |
 | Length-bucket analysis | ✅ Complete |
 | Data-leakage audit | ✅ Complete |
-| Blind AI/LLM judge | ✅ Complete (supplementary Marathi analysis) |
-| Blind human evaluation | ✅ Complete (100 example-level verdicts) |
+| Google Forms blind human evaluation | ✅ Complete (100 examples; unlabeled, shuffled E0/E1 summary options + Tie) |
 | Independent real-Marathi benchmark | ⏸️ Deferred from core multilingual paper |
 | Hindi / Tamil experiments | ⏳ Separate student work |
 
-The core Marathi research checkpoint for the multilingual paper is now **automatic metrics + paired statistics + length-specific analysis + leakage/integrity audit**. The AI/LLM judge is retained as supplementary evidence and is not required for the other languages.
+The core Marathi research checkpoint for the multilingual paper is **automatic metrics + paired statistics + length-specific analysis + leakage/integrity audit**. A separate Google Forms blind human-preference study is documented as supplementary evidence; it does not change the core automatic-metric endpoint.
 
 ## Dataset: Marathi v1
 
@@ -133,8 +132,7 @@ Core statistical analysis:
 
 Supplementary Marathi analysis:
 
-- blind A/B human evaluation on the independent 100-example set; final audited outcomes: E0 = 19, E1 = 27, Tie = 54
-- AI/LLM-judge results and targeted qualitative/error analysis
+- Google Forms blind pairwise human-preference evaluation on 100 independent examples. Each form question displayed the source article; the first and second response options displayed only the two summaries, with E0/E1 order shuffled per example and no model tags; the third option was Tie. Final audited outcomes: E0 = 19, E1 = 27, Tie = 54.
 
 An independent real-Marathi generalization benchmark is documented as a deferred supplementary direction rather than a core multilingual-paper requirement.
 
