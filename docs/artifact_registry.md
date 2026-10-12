@@ -62,7 +62,7 @@ Preparation evidence is under:
 |---|---|---|---|
 | `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_summary.csv` | Final audited human-preference summary | ✅ Complete | `29e68141daae11836bc9cb8c551b57f08d1c6be6eb480eac8ffbc863554df94f` |
 | `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_verdicts.csv` | Final audited per-example model-labeled verdicts | ✅ Complete | `42c461c8bd45022edac4a08fb2e881b6c10ed9443d2d402506094ad6d9ddfc46` |
-| `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_metadata.json` | Human-evaluation configuration and result metadata | ✅ Complete | (metadata generated from the final audited record) |
+| `results/MR-FT-001/human_evaluation/MR-FT-001_human_eval_metadata.json` | Google Forms setup, shuffled option design, and result metadata | ✅ Complete | (metadata generated from the final audited record) |
 
 Final outcome counts:
 
@@ -70,7 +70,7 @@ Final outcome counts:
 - E1 = 27
 - Tie = 54
 
-Private A/B mapping keys are intentionally excluded from the public repository.
+Private per-example mappings from first/second Google Forms option position to E0/E1 are intentionally excluded from the public repository.
 
 ## Storage policy
 
