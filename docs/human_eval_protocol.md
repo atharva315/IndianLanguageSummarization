@@ -29,18 +29,18 @@ Decoding was deterministic with `do_sample=false`.
 
 For this supplementary human-evaluation inference, `max_new_tokens=2048` was used only as a generous safety ceiling; it was not a target summary length.
 
-## Blind design
+## Google Forms blind design
 
-For each example:
+The study was conducted as a blind human-preference comparison using Google Forms. For each of the 100 examples:
 
-1. show the source Marathi article
-2. show two summaries labeled only **A** and **B**
-3. randomize which model is A and which is B
-4. do not reveal model identity during judgment
-5. ask only: **Which summary do you prefer?**
-6. allow **A / B / Tie**
+1. Display the source Marathi article as the form question/prompt.
+2. Use the generated E0 and E1 summaries as the first and second answer options. Each option displays only the summary text: there are no A/B tags, E0/E1 labels, or model-identifying tags beside either summary.
+3. Shuffle the order of the two summary options per example, so the first option can be E0 or E1 and the second option is the other model's summary.
+4. Use **Tie** as the third answer option.
+5. Ask the evaluator: **Which summary do you prefer?**
+6. Keep the per-example mapping from first/second option position to E0/E1 private, and use it after collecting responses to map each preference back to the correct model.
 
-The private A/B-to-model key is not committed to the public repository.
+This was a human-response study through Google Forms, not an automated model-judge evaluation. The private option-position-to-model mapping is not committed to the public repository.
 
 ## Final audited result
 
@@ -67,5 +67,5 @@ The per-example verdict artifact stored in this repository uses these final audi
 - human responses do not change the frozen-test prompt
 - human responses do not change the selected checkpoint
 - the frozen-test automatic results remain unchanged
-- the private A/B key is withheld
+- the private per-example option-position-to-model mapping is withheld
 - the final model-labeled verdicts and aggregate result are versioned separately from any private participant information
