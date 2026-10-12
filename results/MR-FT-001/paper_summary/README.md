@@ -32,7 +32,7 @@ These results support the statement that E1 outperformed E0 on the defined autom
 
 ## Supplementary human evaluation
 
-A separate blind pairwise human evaluation was conducted on 100 independent Marathi examples.
+A separate blind pairwise human-preference evaluation was conducted through Google Forms on 100 independent Marathi examples. The source article appeared as the form question; the first and second answer options displayed only the E0/E1 summary text in shuffled order without A/B or model tags, and the third option was Tie.
 
 | Outcome | Count |
 |---|---:|
