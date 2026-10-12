@@ -23,5 +23,16 @@
     "Tie": 54
   },
   "final_mapping_audit": "Final audited interpretation maps E0 to the base Gemma model and E1 to the Gemma + QLoRA adapter.",
-  "private_ab_mapping": "Not committed to the public repository."
+  "evaluation_platform": "Google Forms",
+  "evaluator_type": "Human evaluators",
+  "response_design": {
+    "question": "Source Marathi article",
+    "preference_question": "Which summary do you prefer?",
+    "first_option": "One model summary shown as text only, without A/B or model-identifying tags",
+    "second_option": "The other model summary shown as text only, without A/B or model-identifying tags",
+    "option_order": "E0 and E1 summaries were shuffled between the first and second options per example",
+    "third_option": "Tie",
+    "mapping": "A private per-example option-position-to-model mapping was used to decode preferences after collection"
+  },
+  "private_option_order_mapping": "The per-example mapping from first/second option position to E0/E1 is not committed to the public repository."
 }
