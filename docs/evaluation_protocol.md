@@ -77,9 +77,29 @@ Report sentence-level distributions where useful.
 
 ## Statistical comparison
 
-For paired E0/E1 comparisons, use paired bootstrap resampling or another documented paired test where appropriate.
+The canonical E0-versus-E1 automatic-metric analysis uses the same 794 frozen-test examples for both systems and performs the following procedures separately for each of the five primary metrics (ROUGE-1, ROUGE-2, ROUGE-L, chrF++, and BERTScore-F1).
 
-The statistical method, number of resamples, random seed, confidence level, and multiple-comparison handling must be recorded before final claims are made.
+### Paired bootstrap confidence interval
+
+- Calculate each paired difference as `d_i = E1_i - E0_i`.
+- Draw 10,000 bootstrap samples, each resampling the 794 paired differences with replacement.
+- Use the 2.5th and 97.5th percentiles of the bootstrap distribution of mean differences as the 95% confidence interval.
+
+### Paired sign-flip randomization test
+
+The committed analysis notebook implements a **two-sided paired sign-flip randomization test** (not a one-sided test):
+
+- Number of randomization draws: **10,000**.
+- NumPy random generator: `numpy.random.default_rng(20261007)`.
+- For each draw, independently multiply each paired difference by a randomly selected sign, `-1` or `+1`, then calculate the mean of the sign-flipped differences.
+- A draw is counted as at least as extreme when `abs(randomized_mean) >= abs(observed_mean_difference)`; the absolute values make the test two-sided.
+- The Monte Carlo p-value uses the **add-one correction**:
+
+  `p = (1 + number_of_extreme_draws) / (10,000 + 1)`
+
+This avoids reporting a zero p-value merely because no sampled randomization was as extreme as the observed statistic. The raw p-values are then adjusted using the Holm step-down procedure across the five primary metrics. The documented significance threshold is `alpha = 0.05`, applied to the Holm-adjusted p-values.
+
+The notebook's code is the source of truth for the test tail and p-value convention. Do not describe this core automatic-metric test as one-sided. A separate AI/LLM-judge analysis, if present in an exploratory notebook, is not the canonical human evaluation and is not part of this core automatic-metric procedure.
 
 ## Supplementary Google Forms blind human evaluation
 
