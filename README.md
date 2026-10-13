@@ -56,6 +56,51 @@ Data provenance and template balancing: [docs/data_provenance_and_template_balan
 
 Model selection and QLoRA rationale: [docs/model_selection_and_qlora_rationale.md](docs/model_selection_and_qlora_rationale.md)
 
+## Tokenizer-fertility study
+
+We measured tokenizer segmentation efficiency for Marathi text. Fertility is defined as:
+
+`fertility = number of tokenizer tokens / number of whitespace-separated words`
+
+Tokenization used `add_special_tokens=False`. The tokenizer-only comparison covered Gemma 4 E2B IT, Qwen3-4B, and BLOOMZ-3B. Model weights were not loaded for this study, and these results measure segmentation—not summarization quality or overall model capability.
+
+### Diagnostic set (1,000 examples)
+
+| Text category | Examples |
+|---|---:|
+| Native Devanagari | 500 |
+| Native Latin | 200 |
+| Romanized Marathi | 150 |
+| Code-mixed Devanagari | 75 |
+| Code-mixed Roman | 75 |
+| **Total** | **1,000** |
+
+The Romanized Marathi items were controlled transliterations for diagnosis, not naturally collected Roman Marathi user text. This diagnostic set was not used for fine-tuning.
+
+### Mean fertility on the diagnostic set
+
+| Text category | Gemma 4 E2B | Qwen3-4B | BLOOMZ-3B |
+|---|---:|---:|---:|
+| Native Devanagari | 1.872 | 6.828 | 1.617 |
+| Native Latin | 1.144 | 1.144 | 1.169 |
+| Romanized Marathi | 3.772 | 4.385 | 3.867 |
+| Code-mixed Devanagari | 1.849 | 6.688 | 1.601 |
+| Code-mixed Roman | 3.670 | 4.270 | 3.762 |
+
+### Measurement on the 14,020-example training corpus
+
+For this measurement, we extracted only the Marathi source article from each training prompt; the instruction and reference summary were excluded.
+
+| Tokenizer | N | Mean fertility | Median | P90 | P95 | Mean tokens | Mean words |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Gemma 4 E2B | 14,020 | 1.848 | 1.851 | 2.036 | 2.068 | 272.185 | 147.781 |
+| Qwen3-4B | 14,020 | 6.821 | 6.841 | 7.094 | 7.430 | 1007.290 | 147.781 |
+| BLOOMZ-3B | 14,020 | 1.584 | 1.594 | 1.726 | 1.761 | 233.780 | 147.781 |
+
+BLOOMZ-3B had the lowest measured fertility on this dataset, while Qwen3-4B had the highest. This does **not** establish that BLOOMZ produces better Marathi summaries. Fertility depends on the text and tokenizer and is not a direct measure of downstream quality.
+
+Detailed methodology, per-example artifact names, scripts, limitations, and compatibility status: [docs/tokenizer_analysis.md](docs/tokenizer_analysis.md).
+
 ## Model and training
 
 Base model:
